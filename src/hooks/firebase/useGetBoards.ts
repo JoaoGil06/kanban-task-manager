@@ -1,7 +1,7 @@
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { db } from '../../config/firebase';
 import { useEffect, useState } from 'react';
-import Board from '../types/Board.type';
+import Board from '../../types/Board.type';
 
 export const useGetBoards = () => {
 	const [boards, setBoards] = useState<Board[]>([]);
@@ -11,8 +11,6 @@ export const useGetBoards = () => {
 		setIsLoadingBoards(true);
 		const boardsCollectionsRef = collection(db, 'boards');
 		const queryBoards = query(boardsCollectionsRef);
-
-		console.log('queryBoards', queryBoards);
 
 		const unsubscribe = onSnapshot(queryBoards, (snapshot) => {
 			const docs = snapshot.docs.map((doc) => {

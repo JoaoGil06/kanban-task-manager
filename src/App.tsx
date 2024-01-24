@@ -1,6 +1,8 @@
 import PageHeader from './components/PageHeader';
 import { useSideBarContext } from './components/SideBar/context/SideBarContext';
+import { GlobalContextProvider } from './context/GlobalContext';
 import Board from './pages/Board';
+import { BoardContextProvider } from './pages/Board/context/BoardContext';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { GlobalStyle } from './styles/GlobalStyle';
@@ -11,16 +13,27 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<PageHeader />
+			<GlobalContextProvider>
+				<PageHeader />
 
-			<div style={{ marginLeft: isShown ? '300px' : '0px', transition: 'all .3s' }}>
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/board/:id' element={<Board />} />
-					<Route path='*' element={<NotFound />} />
-				</Routes>
-			</div>
-			<GlobalStyle />
+				<div style={{ marginLeft: isShown ? '30rem' : '0px', transition: 'all .3s' }}>
+					<Routes>
+						<Route path='/' element={<Home />} />
+
+						<Route
+							path='/board/:id'
+							element={
+								<BoardContextProvider>
+									<Board />
+								</BoardContextProvider>
+							}
+						/>
+
+						<Route path='*' element={<NotFound />} />
+					</Routes>
+				</div>
+				<GlobalStyle />
+			</GlobalContextProvider>
 		</BrowserRouter>
 	);
 }

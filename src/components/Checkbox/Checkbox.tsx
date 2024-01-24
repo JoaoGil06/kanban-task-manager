@@ -6,7 +6,6 @@ export const Checkbox = ({ isChecked, checkboxItem, onChange }: CheckboxProps) =
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(isChecked);
 
 	const handleOnChange = (value: string) => {
-		console.log('[teste]: ', value);
 		setIsCheckboxChecked(!isCheckboxChecked);
 		onChange({ value, isChecked: !isCheckboxChecked });
 	};

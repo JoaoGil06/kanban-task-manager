@@ -6,14 +6,14 @@ type SideBarProps = {
 };
 
 export const SideBarContainer = styled.div<SideBarProps>`
-	width: 300px;
+	width: 30rem;
 	position: absolute;
 	top: 9.6rem;
 	bottom: 0;
 	left: 0;
 	transform: translateX(${(props) => (props.isShown ? '0' : '-100%')});
 	transition: transform 0.4s ease-out;
-	border-right: 1px solid var(--lavender);
+	border-right: ${(props) => (props.isShown ? '1px solid var(--lavender)' : 'none')};
 
 	display: flex;
 	flex-direction: column;
@@ -21,7 +21,7 @@ export const SideBarContainer = styled.div<SideBarProps>`
 `;
 
 export const SideBarContent = styled.div<SideBarProps>`
-	width: 300px;
+	width: 30rem;
 `;
 
 export const SideBarTitle = styled.h1`
@@ -70,7 +70,7 @@ export const BoardTitle = styled.span<BoardProps>`
 export const HideContainer = styled.div`
 	display: flex;
 	align-items: center;
-	margin-left: 3.2rem;
+	margin-left: 2.7rem;
 	margin-bottom: 4.7rem;
 	cursor: pointer;
 `;
@@ -102,3 +102,12 @@ export const SideBarButton = styled.button<SideBarProps>`
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const SideBarButtonIcon = styled(ReactSVG as any)``;
+
+export const SideBarBottomContent = styled.div``;
+
+export const SwitchContainer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 2rem;
+`;
