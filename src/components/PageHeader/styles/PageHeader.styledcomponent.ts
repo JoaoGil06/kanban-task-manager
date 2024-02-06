@@ -25,9 +25,9 @@ export const TitleContainer = styled.div`
 	border-bottom: 1px solid var(--lavender);
 	display: flex;
 	align-items: center;
+	padding: 0 2.4rem;
 `;
 
 export const Title = styled.h1`
 	font-size: 2.4rem;
-	margin-left: 2.4rem;
 `;

@@ -22,6 +22,8 @@ export const SideBarContainer = styled.div<SideBarProps>`
 
 export const SideBarContent = styled.div<SideBarProps>`
 	width: 30rem;
+	display: flex;
+	flex-direction: column;
 `;
 
 export const SideBarTitle = styled.h1`
@@ -29,7 +31,8 @@ export const SideBarTitle = styled.h1`
 	font-weight: 700;
 	letter-spacing: 2.4px;
 	color: var(--shadowBlue);
-	margin-left: 3.2rem;
+
+	align-self: center;
 	margin-bottom: 2rem;
 `;
 

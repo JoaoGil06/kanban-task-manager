@@ -1,5 +1,4 @@
 import { Header, ImageContainer, Title, TitleContainer } from './styles/PageHeader.styledcomponent';
-import SideBar from '../SideBar';
 import { useGlobalContext } from '../../context/GlobalContext';
 import logo from '../../assets/logo-dark.svg';
 export const PageHeader = () => {
@@ -15,7 +14,6 @@ export const PageHeader = () => {
 					<Title>{board.title === '' ? 'Kanban Task Manager' : board.title}</Title>
 				</TitleContainer>
 			</Header>
-			<SideBar />
 		</>
 	);
 };

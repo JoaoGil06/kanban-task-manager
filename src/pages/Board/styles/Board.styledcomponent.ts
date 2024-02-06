@@ -11,4 +11,6 @@ export const BoardContainer = styled.div`
 
 export const ColumnsContainer = styled.div`
 	display: flex;
+	padding: 0 2.4rem;
+	gap: 2.4rem;
 `;

@@ -15,7 +15,6 @@ function App() {
 		<BrowserRouter>
 			<GlobalContextProvider>
 				<PageHeader />
-
 				<div style={{ marginLeft: isShown ? '30rem' : '0px', transition: 'all .3s' }}>
 					<Routes>
 						<Route path='/' element={<Home />} />

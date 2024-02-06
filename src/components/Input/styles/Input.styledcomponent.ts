@@ -5,6 +5,14 @@ export const InputContainer = styled.div`
 	flex-direction: column;
 	position: relative;
 	transition: all 0.5s;
+	width: 100%;
+`;
+
+export const InputLabel = styled.label`
+	margin-bottom: 0.8rem;
+	font-weight: 700;
+	color: var(--shadowBlue);
+	text-transform: capitalize;
 `;
 
 type InputComponentProps = {

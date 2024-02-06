@@ -11,6 +11,7 @@ export const CardContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	padding: 0 1.6rem;
+	gap: 0.8rem;
 `;
 
 export const CardTitle = styled.h3`
@@ -19,7 +20,6 @@ export const CardTitle = styled.h3`
 
 export const CardSubtitle = styled.span`
 	font-size: 1.2rem;
-	margin-top: 0.8rem;
 	color: var(--shadowBlue);
 	font-weight: 700;
 `;

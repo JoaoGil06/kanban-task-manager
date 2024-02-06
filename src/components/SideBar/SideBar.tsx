@@ -19,9 +19,11 @@ import IconShowSidebar from '../../assets/icon-show-sidebar.svg';
 import { useSideBarContext } from './context/SideBarContext';
 import BoardLink from './components/BoardLink';
 import SwitchTheme from '../SwitchTheme';
+import { useBoardContext } from '../../pages/Board/context/BoardContext';
 
 export const SideBar = () => {
 	const { isShown, onClickToShowSidebar, boards } = useSideBarContext();
+	const { addNewBoardModal } = useBoardContext();
 
 	return (
 		<>
@@ -33,12 +35,12 @@ export const SideBar = () => {
 				<SideBarContent isShown={isShown}>
 					<SideBarTitle>All Boards ({boards.length})</SideBarTitle>
 					{boards.map((board) => {
-						return <BoardLink to={`board/${board.id}`} key={board.id} title={board.title} />;
+						return <BoardLink to={`/board/${board.id}`} key={board.id} title={board.title} />;
 					})}
 
 					<BoardContainer isActive={false}>
 						<BoardIcon src={IconBoard} isActive={false} isAddNewBoard />
-						<BoardTitle isActive={false} isAddNewBoard>
+						<BoardTitle isActive={false} isAddNewBoard onClick={addNewBoardModal.onClickAddNewBoard}>
 							+ Create new board
 						</BoardTitle>
 					</BoardContainer>

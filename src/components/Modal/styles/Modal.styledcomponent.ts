@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const ModalContainer = styled.div`
+	min-width: 48rem;
+
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -18,4 +20,5 @@ export const ModalOverlay = styled.div`
 	right: 0;
 	background-color: rgba(0, 0, 0, 0.7);
 	z-index: 100;
+	cursor: pointer;
 `;

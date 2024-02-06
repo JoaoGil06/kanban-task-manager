@@ -4,6 +4,7 @@ import { useGetTasks } from '../../../hooks/firebase/useGetTasks';
 import { useParams } from 'react-router-dom';
 import BoardData from '../types/BoardData.type';
 import useModal from '../../../hooks/useModal';
+import { DropResult } from 'react-beautiful-dnd';
 
 type BoardContextType = {
 	boardData: BoardData[];
@@ -13,6 +14,12 @@ type BoardContextType = {
 		isNewColumnModalOpen: boolean;
 		onCloseNewColumnModal: () => void;
 	};
+	addNewBoardModal: {
+		onClickAddNewBoard: () => void;
+		isNewBoardModalOpen: boolean;
+		onCloseNewBoardModal: () => void;
+	};
+	onDragEnd: (event: DropResult) => void;
 };
 
 type BoardContextProviderProps = {
@@ -24,6 +31,7 @@ const BoardContext = createContext({} as BoardContextType);
 export const BoardContextProvider = ({ children }: BoardContextProviderProps) => {
 	const { id } = useParams();
 	const { isOpen: isNewColumnModalOpen, closeModal: closeNewColumnModal, openModal: openNewColumnModal } = useModal();
+	const { isOpen: isNewBoardModalOpen, closeModal: closeNewBoardModal, openModal: openNewBoardModal } = useModal();
 	const [boardData, setBoardData] = useState<BoardData[]>([]);
 
 	const { columns, isLoadingColumns } = useGetColumns(id);
@@ -51,13 +59,41 @@ export const BoardContextProvider = ({ children }: BoardContextProviderProps) =>
 		mapTasksAndColumns();
 	}, [mapTasksAndColumns]);
 
-	const onClickAddNewColumn = () => {
-		openNewColumnModal();
+	const onDragEnd = (event: DropResult) => {
+		const { source, destination } = event;
+
+		if (!destination) return;
+
+		if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+
+		const sourceColumnIndex = +source.droppableId.split('-')[1];
+		const sourceItemIndex = source.index;
+		const destinationColumnIndex = +destination.droppableId.split('-')[1];
+		const destinationItemIndex = destination.index;
+
+		const newBoardData = [...boardData];
+
+		const sourceColumnData = newBoardData[sourceColumnIndex];
+		const destinationColumnData = newBoardData[destinationColumnIndex];
+
+		const [removedTask] = sourceColumnData.column.tasks.splice(sourceItemIndex, 1);
+		destinationColumnData.column.tasks.splice(destinationItemIndex, 0, removedTask);
+
+		newBoardData[sourceColumnIndex].column.tasks = sourceColumnData.column.tasks;
+		newBoardData[destinationColumnIndex].column.tasks = destinationColumnData.column.tasks;
+
+		setBoardData(newBoardData);
 	};
 
 	return (
 		<BoardContext.Provider
-			value={{ boardData, isLoading: isLoadingColumns || isLoadingTasks, addNewColumnModal: { isNewColumnModalOpen, onClickAddNewColumn, onCloseNewColumnModal: closeNewColumnModal } }}
+			value={{
+				boardData,
+				isLoading: isLoadingColumns || isLoadingTasks,
+				addNewColumnModal: { isNewColumnModalOpen, onClickAddNewColumn: openNewColumnModal, onCloseNewColumnModal: closeNewColumnModal },
+				addNewBoardModal: { isNewBoardModalOpen, onClickAddNewBoard: openNewBoardModal, onCloseNewBoardModal: closeNewBoardModal },
+				onDragEnd,
+			}}
 		>
 			{children}
 		</BoardContext.Provider>

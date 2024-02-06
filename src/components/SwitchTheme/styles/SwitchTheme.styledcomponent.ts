@@ -8,18 +8,17 @@ export const Container = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 2rem;
 `;
 
 export const IconLight = styled.img`
 	height: 1.5rem;
 	width: 1.5rem;
-	margin-right: 2rem;
 `;
 
 export const IconDark = styled.img`
 	height: 1.5rem;
 	width: 1.5rem;
-	margin-left: 2rem;
 `;
 
 type SwitchContainerProps = {

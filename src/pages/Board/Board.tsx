@@ -3,26 +3,41 @@ import { Column } from '../../components/Column/Column';
 import { BoardContainer, ColumnsContainer } from './styles/Board.styledcomponent';
 import EmptyColumn from '../../components/EmptyColumn';
 import NewColumnModal from './components/NewColumnModal/NewColumnModal';
+import SideBar from '../../components/SideBar';
+import { NewBoardModal } from './components/NewBoardModal/NewBoardModal';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const colorsArray = ['#49C4E5', '#8471F2', '#67E2AE'];
 
 export const Board = () => {
-	const { boardData, isLoading, addNewColumnModal } = useBoardContext();
+	const { boardData, isLoading, addNewColumnModal, addNewBoardModal, onDragEnd } = useBoardContext();
 
 	if (isLoading) {
 		return <p>Is loading...</p>;
 	}
 
 	return (
-		<BoardContainer>
-			<ColumnsContainer>
-				{boardData.map((data, index) => (
-					<Column key={data.column.id} title={data.column.title} tasks={data.column.tasks} color={colorsArray[index] ?? '#EA5555'} />
-				))}
-				<EmptyColumn onClick={addNewColumnModal.onClickAddNewColumn} />
-			</ColumnsContainer>
+		<>
+			<SideBar />
+			<BoardContainer>
+				<DragDropContext onDragEnd={onDragEnd}>
+					<ColumnsContainer>
+						{boardData.map((data, index) => (
+							<Droppable droppableId={`ROOT-${index}`} type='group'>
+								{(provided) => (
+									<div {...provided.droppableProps} ref={provided.innerRef}>
+										<Column key={data.column.id} title={data.column.title} tasks={data.column.tasks} color={colorsArray[index] ?? '#EA5555'} />
+									</div>
+								)}
+							</Droppable>
+						))}
+						<EmptyColumn onClick={addNewColumnModal.onClickAddNewColumn} />
+					</ColumnsContainer>
+				</DragDropContext>
 
-			<NewColumnModal isOpen={addNewColumnModal.isNewColumnModalOpen} onClose={addNewColumnModal.onCloseNewColumnModal} />
-		</BoardContainer>
+				<NewColumnModal isOpen={addNewColumnModal.isNewColumnModalOpen} onClose={addNewColumnModal.onCloseNewColumnModal} />
+				<NewBoardModal isOpen={addNewBoardModal.isNewBoardModalOpen} onClose={addNewBoardModal.onCloseNewBoardModal} />
+			</BoardContainer>
+		</>
 	);
 };
