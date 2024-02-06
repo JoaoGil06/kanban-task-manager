@@ -3,7 +3,7 @@ import Input from '../../../../components/Input';
 import Modal from '../../../../components/Modal';
 import Button from '../../../../components/Button';
 import { ButtonVariant } from '../../../../components/Button/types/ButtonVariant.enum';
-import { FormRow, ModalTitle, Form, ModalContainer } from './styles/NewColumnModal.styledcomponent';
+import { ModalTitle, Form, ModalContainer } from './styles/NewColumnModal.styledcomponent';
 import NewColumnModalProps from './types/NewColumnModalProps.type';
 
 const NewColumnModal = ({ isOpen, onClose }: NewColumnModalProps) => {

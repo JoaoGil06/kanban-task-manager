@@ -1,11 +1,7 @@
-import { ReactNode, createContext, useContext } from 'react';
+import { PropsWithChildren, createContext, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGetBoard } from '../hooks/firebase/useGetBoard';
 import Board from '../types/Board.type';
-
-type GlobalContextProviderProps = {
-	children: ReactNode;
-};
 
 type GlobalContextType = {
 	board: Board;
@@ -14,7 +10,7 @@ type GlobalContextType = {
 
 const GlobalContext = createContext({} as GlobalContextType);
 
-export const GlobalContextProvider = ({ children }: GlobalContextProviderProps) => {
+export const GlobalContextProvider = ({ children }: PropsWithChildren) => {
 	const location = useLocation();
 	const pathSegments = location.pathname.split('/');
 	const id = pathSegments[pathSegments.length - 1];

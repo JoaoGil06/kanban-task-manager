@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useGetColumns } from '../../../hooks/firebase/useGetColumnsByBoardId';
 import { useGetTasks } from '../../../hooks/firebase/useGetTasks';
 import { useParams } from 'react-router-dom';
@@ -22,13 +22,9 @@ type BoardContextType = {
 	onDragEnd: (event: DropResult) => void;
 };
 
-type BoardContextProviderProps = {
-	children: ReactNode;
-};
-
 const BoardContext = createContext({} as BoardContextType);
 
-export const BoardContextProvider = ({ children }: BoardContextProviderProps) => {
+export const BoardContextProvider = ({ children }: PropsWithChildren) => {
 	const { id } = useParams();
 	const { isOpen: isNewColumnModalOpen, closeModal: closeNewColumnModal, openModal: openNewColumnModal } = useModal();
 	const { isOpen: isNewBoardModalOpen, closeModal: closeNewBoardModal, openModal: openNewBoardModal } = useModal();

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, PropsWithChildren } from 'react';
 import { useGetBoards } from '../../../hooks/firebase/useGetBoards';
 import Board from '../../../types/Board.type';
 
@@ -10,13 +10,9 @@ type SideBarContextType = {
 	selectedBoard: string;
 };
 
-type SideBarProviderProps = {
-	children: ReactNode;
-};
-
 const SideBarContext = createContext({} as SideBarContextType);
 
-export const SideBarProvider = ({ children }: SideBarProviderProps) => {
+export const SideBarProvider = ({ children }: PropsWithChildren) => {
 	const [isShown, setIsShown] = useState<boolean>(false);
 	const [selectedBoard, setSelectedBoard] = useState<string>('Kanban Task Manager');
 	const { boards } = useGetBoards();
