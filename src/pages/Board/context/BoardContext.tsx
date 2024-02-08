@@ -14,11 +14,6 @@ type BoardContextType = {
 		isNewColumnModalOpen: boolean;
 		onCloseNewColumnModal: () => void;
 	};
-	addNewBoardModal: {
-		onClickAddNewBoard: () => void;
-		isNewBoardModalOpen: boolean;
-		onCloseNewBoardModal: () => void;
-	};
 	onDragEnd: (event: DropResult) => void;
 };
 
@@ -27,7 +22,6 @@ const BoardContext = createContext({} as BoardContextType);
 export const BoardContextProvider = ({ children }: PropsWithChildren) => {
 	const { id } = useParams();
 	const { isOpen: isNewColumnModalOpen, closeModal: closeNewColumnModal, openModal: openNewColumnModal } = useModal();
-	const { isOpen: isNewBoardModalOpen, closeModal: closeNewBoardModal, openModal: openNewBoardModal } = useModal();
 	const [boardData, setBoardData] = useState<BoardData[]>([]);
 
 	const { columns, isLoadingColumns } = useGetColumns(id);
@@ -87,7 +81,6 @@ export const BoardContextProvider = ({ children }: PropsWithChildren) => {
 				boardData,
 				isLoading: isLoadingColumns || isLoadingTasks,
 				addNewColumnModal: { isNewColumnModalOpen, onClickAddNewColumn: openNewColumnModal, onCloseNewColumnModal: closeNewColumnModal },
-				addNewBoardModal: { isNewBoardModalOpen, onClickAddNewBoard: openNewBoardModal, onCloseNewBoardModal: closeNewBoardModal },
 				onDragEnd,
 			}}
 		>

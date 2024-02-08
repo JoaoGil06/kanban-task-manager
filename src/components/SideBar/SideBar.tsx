@@ -19,11 +19,11 @@ import IconShowSidebar from '../../assets/icon-show-sidebar.svg';
 import { useSideBarContext } from './context/SideBarContext';
 import BoardLink from './components/BoardLink';
 import SwitchTheme from '../SwitchTheme';
-import { useBoardContext } from '../../pages/Board/context/BoardContext';
+import { useGlobalContext } from '../../context/GlobalContext';
 
 export const SideBar = () => {
 	const { isShown, onClickToShowSidebar, boards } = useSideBarContext();
-	const { addNewBoardModal } = useBoardContext();
+	const { addNewBoardModal } = useGlobalContext();
 
 	return (
 		<>

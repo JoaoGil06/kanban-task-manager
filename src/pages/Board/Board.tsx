@@ -3,14 +3,15 @@ import { Column } from '../../components/Column/Column';
 import { BoardContainer, ColumnsContainer } from './styles/Board.styledcomponent';
 import EmptyColumn from '../../components/EmptyColumn';
 import NewColumnModal from './components/NewColumnModal/NewColumnModal';
-import SideBar from '../../components/SideBar';
 import { NewBoardModal } from './components/NewBoardModal/NewBoardModal';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useGlobalContext } from '../../context/GlobalContext';
 
 const colorsArray = ['#49C4E5', '#8471F2', '#67E2AE'];
 
 export const Board = () => {
-	const { boardData, isLoading, addNewColumnModal, addNewBoardModal, onDragEnd } = useBoardContext();
+	const { boardData, isLoading, addNewColumnModal, onDragEnd } = useBoardContext();
+	const { addNewBoardModal } = useGlobalContext();
 
 	if (isLoading) {
 		return <p>Is loading...</p>;
@@ -18,7 +19,6 @@ export const Board = () => {
 
 	return (
 		<>
-			<SideBar />
 			<BoardContainer>
 				<DragDropContext onDragEnd={onDragEnd}>
 					<ColumnsContainer>

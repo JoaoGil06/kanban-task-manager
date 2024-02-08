@@ -6,9 +6,10 @@ type ButtonProps = {
 };
 
 export const ButtonContainer = styled.button<ButtonProps>`
-	min-width: 25rem;
-	height: 4rem;
-	margin: 0 auto;
+	/* min-width: 25rem; */
+	/* height: 4rem; */
+	/* margin: 0 auto; */
+	padding: 0.8rem 2.4rem;
 	border-radius: 20px;
 	border: none;
 	cursor: pointer;

@@ -23,9 +23,11 @@ export const TitleContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	border-bottom: 1px solid var(--lavender);
+	padding: 0 2.4rem;
+
 	display: flex;
 	align-items: center;
-	padding: 0 2.4rem;
+	justify-content: space-between;
 `;
 
 export const Title = styled.h1`
