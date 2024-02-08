@@ -12,6 +12,11 @@ type GlobalContextType = {
 		isNewBoardModalOpen: boolean;
 		onCloseNewBoardModal: () => void;
 	};
+	addNewTaskModal: {
+		onClickAddNewTask: () => void;
+		isNewTaskModalOpen: boolean;
+		onCloseNewTaskModal: () => void;
+	};
 };
 
 const GlobalContext = createContext({} as GlobalContextType);
@@ -21,11 +26,19 @@ export const GlobalContextProvider = ({ children }: PropsWithChildren) => {
 	const pathSegments = location.pathname.split('/');
 	const id = pathSegments[pathSegments.length - 1];
 	const { isOpen: isNewBoardModalOpen, closeModal: closeNewBoardModal, openModal: openNewBoardModal } = useModal();
+	const { isOpen: isNewTaskModalOpen, closeModal: closeNewTaskModal, openModal: openNewTaskModal } = useModal();
 
 	const { board, isLoadingBoard } = useGetBoard(id);
 
 	return (
-		<GlobalContext.Provider value={{ board, isLoadingBoard, addNewBoardModal: { isNewBoardModalOpen, onClickAddNewBoard: openNewBoardModal, onCloseNewBoardModal: closeNewBoardModal } }}>
+		<GlobalContext.Provider
+			value={{
+				board,
+				isLoadingBoard,
+				addNewBoardModal: { isNewBoardModalOpen, onClickAddNewBoard: openNewBoardModal, onCloseNewBoardModal: closeNewBoardModal },
+				addNewTaskModal: { isNewTaskModalOpen, onClickAddNewTask: openNewTaskModal, onCloseNewTaskModal: closeNewTaskModal },
+			}}
+		>
 			{children}
 		</GlobalContext.Provider>
 	);

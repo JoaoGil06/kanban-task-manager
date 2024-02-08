@@ -22,6 +22,7 @@ const BoardContext = createContext({} as BoardContextType);
 export const BoardContextProvider = ({ children }: PropsWithChildren) => {
 	const { id } = useParams();
 	const { isOpen: isNewColumnModalOpen, closeModal: closeNewColumnModal, openModal: openNewColumnModal } = useModal();
+
 	const [boardData, setBoardData] = useState<BoardData[]>([]);
 
 	const { columns, isLoadingColumns } = useGetColumns(id);
@@ -34,11 +35,9 @@ export const BoardContextProvider = ({ children }: PropsWithChildren) => {
 			const findedTasks = tasks.filter((task) => task.column_id === column.id);
 
 			return {
-				column: {
-					id: column.id,
-					title: column.title,
-					tasks: findedTasks,
-				},
+				id: column.id,
+				title: column.title,
+				tasks: findedTasks,
 			};
 		});
 

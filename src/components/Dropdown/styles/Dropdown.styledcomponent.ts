@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const DropdownContainer = styled.div`
-	width: 35rem;
-	height: 4rem;
 	position: relative;
 `;
 
@@ -33,7 +31,7 @@ export const DropdownContent = styled.div`
 	position: absolute;
 	top: 110%;
 	left: 0;
-	padding: 1.6rem 1.6rem;
+	padding: 1.6rem;
 	width: 100%;
 	transition: all 0.2s;
 	border-radius: 0.4rem;
