@@ -5,7 +5,7 @@ import Button from '../Button';
 import { ButtonVariant } from '../Button/types/ButtonVariant.enum';
 import ActionList from '../ActionList';
 export const PageHeader = () => {
-	const { board, addNewTaskModal } = useGlobalContext();
+	const { board, addNewTaskModal, deleteBoardModal } = useGlobalContext();
 
 	return (
 		<>
@@ -22,7 +22,7 @@ export const PageHeader = () => {
 								actions={[
 									{
 										label: 'Delete Board',
-										onClick: () => {},
+										onClick: deleteBoardModal.onClickOpenDeleteBoard,
 									},
 								]}
 							/>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	position: relative;
 	display: flex;
-	flex: 1;
 `;
 
 export const CircleContainer = styled.div`

@@ -17,6 +17,11 @@ type GlobalContextType = {
 		isNewTaskModalOpen: boolean;
 		onCloseNewTaskModal: () => void;
 	};
+	deleteBoardModal: {
+		isDeleteBoardModalOpen: boolean;
+		onClickOpenDeleteBoard: () => void;
+		onCloseDeleteBoardModal: () => void;
+	};
 };
 
 const GlobalContext = createContext({} as GlobalContextType);
@@ -27,6 +32,7 @@ export const GlobalContextProvider = ({ children }: PropsWithChildren) => {
 	const id = pathSegments[pathSegments.length - 1];
 	const { isOpen: isNewBoardModalOpen, closeModal: closeNewBoardModal, openModal: openNewBoardModal } = useModal();
 	const { isOpen: isNewTaskModalOpen, closeModal: closeNewTaskModal, openModal: openNewTaskModal } = useModal();
+	const { isOpen: isDeleteBoardModalOpen, closeModal: closeDeleteBoardModal, openModal: openDeleteBoardModal } = useModal();
 
 	const { board, isLoadingBoard } = useGetBoard(id);
 
@@ -37,6 +43,7 @@ export const GlobalContextProvider = ({ children }: PropsWithChildren) => {
 				isLoadingBoard,
 				addNewBoardModal: { isNewBoardModalOpen, onClickAddNewBoard: openNewBoardModal, onCloseNewBoardModal: closeNewBoardModal },
 				addNewTaskModal: { isNewTaskModalOpen, onClickAddNewTask: openNewTaskModal, onCloseNewTaskModal: closeNewTaskModal },
+				deleteBoardModal: { isDeleteBoardModalOpen, onClickOpenDeleteBoard: openDeleteBoardModal, onCloseDeleteBoardModal: closeDeleteBoardModal },
 			}}
 		>
 			{children}

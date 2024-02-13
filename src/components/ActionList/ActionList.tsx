@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ActionItem, ActionsContainer, Circle, CircleContainer, Container } from './styles/ActionList.styledcomponent';
-import ActionListProps from './styles/ActionListProps.type';
+import ActionListProps from './types/ActionListProps.type';
 
 export const ActionList = ({ actions }: ActionListProps) => {
-	const [isActionsVisible, setIsActionsVisible] = useState<boolean>(true);
+	const [isActionsVisible, setIsActionsVisible] = useState<boolean>(false);
 
 	const handleToggleActionsVisibility = () => {
 		setIsActionsVisible(!isActionsVisible);
