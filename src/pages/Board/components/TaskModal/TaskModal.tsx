@@ -24,7 +24,7 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
 				<CategoryTitle>SubTasks ({`${taskData?.completedSubTasks} of ${taskData.subTasks?.length}`})</CategoryTitle>
 				{taskData.subTasks?.map((subTask) => {
 					return (
-						<SubTaskWrapper key={subTask.task_id}>
+						<SubTaskWrapper key={subTask.id}>
 							<Checkbox checkboxItem={{ value: subTask.id, label: subTask.title }} isChecked={subTask.completed} onChange={() => {}} />
 						</SubTaskWrapper>
 					);

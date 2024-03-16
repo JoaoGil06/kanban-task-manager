@@ -1,16 +1,18 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { useGetColumns } from '../../../hooks/firebase/useGetColumnsByBoardId';
-import { useGetTasks } from '../../../hooks/firebase/useGetTasks';
 import { useParams } from 'react-router-dom';
 import BoardData from '../types/BoardData.type';
 import useModal from '../../../hooks/useModal';
 import { DropResult } from 'react-beautiful-dnd';
 import mapTasksAndColumns from './Mappers/MapTasksAndColumns';
 import Task from '../../../types/Task.type';
-import { useGetSubTasks } from '../../../hooks/firebase/useGetSubTasks';
 import TaskData from '../types/TaskData.type';
 import mapTaskAndSubTasks from './Mappers/MapTaskAndSubTasks';
 import Column from '../../../types/Column.type';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { GET_COLUMNS_BY_BOARD_ID } from '../../../graphql/queries/columns';
+import { GET_TASKS } from '../../../graphql/queries/tasks';
+import { GET_SUBTASKS } from '../../../graphql/queries/subtasks';
+import { DELETE_BOARD } from '../../../graphql/mutations/boards';
 
 type BoardContextType = {
 	boardData: BoardData[];
@@ -28,6 +30,7 @@ type BoardContextType = {
 		onCloseTaskModal: () => void;
 	};
 	onDragEnd: (event: DropResult) => void;
+	onDeleteBoard: () => void;
 };
 
 const BoardContext = createContext({} as BoardContextType);
@@ -41,15 +44,37 @@ export const BoardContextProvider = ({ children }: PropsWithChildren) => {
 	const [taskData, setTaskData] = useState<TaskData>({} as TaskData);
 	const [selectedTask, setSelectedTask] = useState<Task>({} as Task);
 
-	const { columns, isLoadingColumns } = useGetColumns(id);
-	const { tasks, isLoadingTasks } = useGetTasks(columns);
-	const { onGetSubTasks, isLoadingSubTasks, subTasks } = useGetSubTasks();
+	const { loading: isLoadingColumnsData, data: columnsData } = useQuery(GET_COLUMNS_BY_BOARD_ID, {
+		variables: { board_id: id },
+	});
+	const [getTasks, { loading: isLoadingTasksData, data: tasksData }] = useLazyQuery(GET_TASKS);
+	const [getSubTasks, { data: subTasksData }] = useLazyQuery(GET_SUBTASKS);
+
+	const [deleteBoard, { loading, error }] = useMutation(DELETE_BOARD, {
+		onCompleted: () => {
+			// Handle completion, e.g., showing a success message or redirecting
+			console.log('Board deleted successfully');
+		},
+		onError: (error) => {
+			// Handle error
+			console.error('Error deleting board:', error.message);
+		},
+	});
 
 	useEffect(() => {
-		if (isLoadingColumns || isLoadingTasks) return;
-		const data = mapTasksAndColumns(columns, tasks);
-		setBoardData(data);
-	}, [columns, isLoadingColumns, isLoadingTasks, tasks]);
+		if (columnsData?.length > 0) {
+			getTasks({ variables: { columns: columnsData } });
+		}
+	}, [columnsData, getTasks]);
+
+	useEffect(() => {
+		if (isLoadingColumnsData || isLoadingTasksData) return;
+		if (columnsData?.length > 0 && tasksData?.length > 0) {
+			const data = mapTasksAndColumns(columnsData, tasksData);
+
+			setBoardData(data);
+		}
+	}, [columnsData, isLoadingColumnsData, isLoadingTasksData, tasksData]);
 
 	const onDragEnd = (event: DropResult) => {
 		const { source, destination } = event;
@@ -81,29 +106,35 @@ export const BoardContextProvider = ({ children }: PropsWithChildren) => {
 		async (task: Task) => {
 			openTaskModal();
 			setSelectedTask(task);
-			await onGetSubTasks(task.id);
+			await getSubTasks({ variables: { task_id: task.id } });
 		},
-		[onGetSubTasks, openTaskModal]
+		[getSubTasks, openTaskModal]
 	);
 
 	useEffect(() => {
 		if (isTaskModalOpen) {
-			const data = mapTaskAndSubTasks(selectedTask, subTasks);
+			const data = mapTaskAndSubTasks(selectedTask, subTasksData || []);
 
 			setTaskData(data);
 		}
-	}, [isTaskModalOpen, selectedTask, subTasks]);
+	}, [isTaskModalOpen, selectedTask, subTasksData]);
+
+	const onDeleteBoard = () => {
+		console.log('carregou no delete board');
+		deleteBoard({ variables: { id: 'XYZ' } });
+	};
 
 	return (
 		<BoardContext.Provider
 			value={{
 				boardData,
 				taskData,
-				columns,
-				isLoading: isLoadingColumns || isLoadingTasks,
+				columns: columnsData || [],
+				isLoading: isLoadingColumnsData || isLoadingTasksData,
 				addNewColumnModal: { isNewColumnModalOpen, onClickAddNewColumn: openNewColumnModal, onCloseNewColumnModal: closeNewColumnModal },
 				taskModal: { isTaskModalOpen, onClickOpenTaskModal: handleOnClickToOpenTaskModal, onCloseTaskModal: closeTaskModal },
 				onDragEnd,
+				onDeleteBoard,
 			}}
 		>
 			{children}

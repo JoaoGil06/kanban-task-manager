@@ -1,8 +1,9 @@
-import { PropsWithChildren, createContext, useContext } from 'react';
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useGetBoard } from '../hooks/firebase/useGetBoard';
 import Board from '../types/Board.type';
 import useModal from '../hooks/useModal';
+import { useQuery } from '@apollo/client';
+import { GET_BOARD } from '../graphql/queries/boards';
 
 type GlobalContextType = {
 	board: Board;
@@ -30,11 +31,19 @@ export const GlobalContextProvider = ({ children }: PropsWithChildren) => {
 	const location = useLocation();
 	const pathSegments = location.pathname.split('/');
 	const id = pathSegments[pathSegments.length - 1];
+	const [board, setBoard] = useState<Board>({ id, title: '' });
+
 	const { isOpen: isNewBoardModalOpen, closeModal: closeNewBoardModal, openModal: openNewBoardModal } = useModal();
 	const { isOpen: isNewTaskModalOpen, closeModal: closeNewTaskModal, openModal: openNewTaskModal } = useModal();
 	const { isOpen: isDeleteBoardModalOpen, closeModal: closeDeleteBoardModal, openModal: openDeleteBoardModal } = useModal();
 
-	const { board, isLoadingBoard } = useGetBoard(id);
+	const { data: boardData, loading: isLoadingBoard } = useQuery(GET_BOARD, { variables: { id } });
+
+	useEffect(() => {
+		if (boardData) {
+			setBoard(boardData);
+		}
+	}, [boardData]);
 
 	return (
 		<GlobalContext.Provider

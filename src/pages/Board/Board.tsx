@@ -13,7 +13,7 @@ import TaskModal from './components/TaskModal';
 const colorsArray = ['#49C4E5', '#8471F2', '#67E2AE'];
 
 export const Board = () => {
-	const { boardData, isLoading, addNewColumnModal, taskModal, onDragEnd } = useBoardContext();
+	const { boardData, isLoading, addNewColumnModal, taskModal, onDragEnd, onDeleteBoard } = useBoardContext();
 	const { addNewBoardModal, addNewTaskModal, deleteBoardModal, board } = useGlobalContext();
 
 	if (isLoading) {
@@ -41,7 +41,7 @@ export const Board = () => {
 				<NewColumnModal isOpen={addNewColumnModal.isNewColumnModalOpen} onClose={addNewColumnModal.onCloseNewColumnModal} />
 				<NewBoardModal isOpen={addNewBoardModal.isNewBoardModalOpen} onClose={addNewBoardModal.onCloseNewBoardModal} />
 				<NewTaskModal isOpen={addNewTaskModal.isNewTaskModalOpen} onClose={addNewTaskModal.onCloseNewTaskModal} columns={boardData} />
-				<DeleteBoardModal isOpen={deleteBoardModal.isDeleteBoardModalOpen} onClose={deleteBoardModal.onCloseDeleteBoardModal} boardTitle={board.title} />
+				<DeleteBoardModal isOpen={deleteBoardModal.isDeleteBoardModalOpen} onClose={deleteBoardModal.onCloseDeleteBoardModal} boardTitle={board.title} onClick={onDeleteBoard} />
 				<TaskModal isOpen={taskModal.isTaskModalOpen} onClose={taskModal.onCloseTaskModal} />
 			</BoardContainer>
 		</>
