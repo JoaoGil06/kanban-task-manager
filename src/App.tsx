@@ -1,6 +1,5 @@
 import Layout from './components/Layout';
 import Board from './pages/Board';
-import { BoardContextProvider } from './pages/Board/context/BoardContext';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { GlobalStyle } from './styles/GlobalStyle';
@@ -12,14 +11,7 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Layout />}>
 					<Route index element={<Home />} />
-					<Route
-						path='/board/:id'
-						element={
-							<BoardContextProvider>
-								<Board />
-							</BoardContextProvider>
-						}
-					/>
+					<Route path='/board/:id' element={<Board />} />
 					<Route path='*' element={<NotFound />} />
 				</Route>
 			</Routes>

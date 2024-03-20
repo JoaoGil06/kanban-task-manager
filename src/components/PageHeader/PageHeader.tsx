@@ -4,7 +4,8 @@ import Button from '../Button';
 import { ButtonVariant } from '../Button/types/ButtonVariant.enum';
 import ActionList from '../ActionList';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { openAddNewTaskModal, openDeleteBoardModal } from '../../store/features/Modal/ModalSlice';
+import { openAddNewTaskModal } from '../../store/features/Modals/NewTaskModal/NewTaskModalSlice';
+import { openDeleteBoardModal } from '../../store/features/Modals/DeleteBoardModal/DeleteBoardModalSlice';
 export const PageHeader = () => {
 	const { title } = useAppSelector((state) => state.board);
 	const dispatch = useAppDispatch();

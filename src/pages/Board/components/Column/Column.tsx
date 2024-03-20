@@ -3,11 +3,11 @@ import { ColumnContainer, ColumnTitle } from './styles/Column.styledcomponent';
 import ColumnProps from './types/ColumnProps.type';
 import Card from '../../../../components/Card';
 import { useAppDispatch } from '../../../../store/store';
-import { openTaskModal, setTaskModalData } from '../../../../store/features/Modal/ModalSlice';
 import { useLazyQuery } from '@apollo/client';
 import { GET_SUBTASKS } from '../../../../graphql/queries/subtasks';
 import Task from '../../../../types/Task.type';
 import { useState } from 'react';
+import { openTaskModal, setTaskModalData } from '../../../../store/features/Modals/TaskModal/TaskModalSlice';
 
 export const Column = ({ title, tasks, color }: ColumnProps) => {
 	const dispatch = useAppDispatch();

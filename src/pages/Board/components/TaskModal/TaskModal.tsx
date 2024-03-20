@@ -9,7 +9,7 @@ import { useAppSelector } from '../../../../store/store';
 
 export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
 	const { isEditing, handleOnClose, actions } = useTaskModal({ onClose });
-	const { taskModalData } = useAppSelector((state) => state.modal);
+	const { taskModalData } = useAppSelector((state) => state.taskModal);
 	const { columns } = useAppSelector((state) => state.board);
 
 	const mapColumnsToDropdown = () => columns.map((column) => ({ label: column.title, value: column.id }));

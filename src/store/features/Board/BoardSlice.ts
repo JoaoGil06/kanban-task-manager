@@ -30,9 +30,34 @@ const boardSlice = createSlice({
 
 			state.data = data;
 		},
+		onDragTask: (state: State, action) => {
+			const { source, destination } = action.payload;
+
+			if (!destination) return;
+
+			if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+
+			const sourceColumnIndex = +source.droppableId.split('-')[1];
+			const sourceItemIndex = source.index;
+			const destinationColumnIndex = +destination.droppableId.split('-')[1];
+			const destinationItemIndex = destination.index;
+
+			const newBoardData = [...state.data];
+
+			const sourceColumnData = newBoardData[sourceColumnIndex];
+			const destinationColumnData = newBoardData[destinationColumnIndex];
+
+			const [removedTask] = sourceColumnData.tasks.splice(sourceItemIndex, 1);
+			destinationColumnData.tasks.splice(destinationItemIndex, 0, removedTask);
+
+			newBoardData[sourceColumnIndex].tasks = sourceColumnData.tasks;
+			newBoardData[destinationColumnIndex].tasks = destinationColumnData.tasks;
+
+			state.data = newBoardData;
+		},
 	},
 });
 
-export const { setBoard, setBoardData, setColumns } = boardSlice.actions;
+export const { setBoard, setBoardData, setColumns, onDragTask } = boardSlice.actions;
 
 export default boardSlice.reducer;

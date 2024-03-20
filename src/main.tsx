@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import { SideBarProvider } from './components/SideBar/context/SideBarContext.tsx';
 import { ApolloProvider } from '@apollo/client';
 import client from './graphql/apollo.ts';
 import { Provider } from 'react-redux';
@@ -14,9 +13,7 @@ if (import.meta.env.DEV) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<ApolloProvider client={client}>
 		<Provider store={store}>
-			<SideBarProvider>
-				<App />
-			</SideBarProvider>
+			<App />
 		</Provider>
 	</ApolloProvider>
 );
