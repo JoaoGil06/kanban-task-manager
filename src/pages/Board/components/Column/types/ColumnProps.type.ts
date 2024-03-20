@@ -1,4 +1,4 @@
-import Task from '../../../types/Task.type';
+import Task from '../../../../../types/Task.type';
 
 export default interface ColumnProps {
 	title: string;

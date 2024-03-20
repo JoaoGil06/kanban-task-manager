@@ -1,28 +1,29 @@
 import Modal from '../../../../components/Modal';
-import { useBoardContext } from '../../context/BoardContext';
 import TaskModalProps from './types/TaskModalProps.type';
 import { CategoryTitle, CategoryWrapper, ModalContainer, SubTaskWrapper, TaskDescription, TaskTitle, TaskTitleWrapper } from './styles/TaskModal.styledcomponent';
 import Dropdown from '../../../../components/Dropdown';
 import Checkbox from '../../../../components/Checkbox';
 import ActionList from '../../../../components/ActionList';
 import { useTaskModal } from './hooks/useTaskModal';
+import { useAppSelector } from '../../../../store/store';
 
 export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
-	const { taskData, columns } = useBoardContext();
 	const { isEditing, handleOnClose, actions } = useTaskModal({ onClose });
+	const { taskModalData } = useAppSelector((state) => state.modal);
+	const { columns } = useAppSelector((state) => state.board);
 
 	const mapColumnsToDropdown = () => columns.map((column) => ({ label: column.title, value: column.id }));
 
 	const renderModalContent = () => (
 		<>
 			<TaskTitleWrapper>
-				<TaskTitle>{taskData.title}</TaskTitle>
+				<TaskTitle>{taskModalData?.title}</TaskTitle>
 				<ActionList actions={actions} />
 			</TaskTitleWrapper>
-			<TaskDescription>{taskData.description}</TaskDescription>
+			<TaskDescription>{taskModalData?.description}</TaskDescription>
 			<CategoryWrapper>
-				<CategoryTitle>SubTasks ({`${taskData?.completedSubTasks} of ${taskData.subTasks?.length}`})</CategoryTitle>
-				{taskData.subTasks?.map((subTask) => {
+				<CategoryTitle>SubTasks ({`${taskModalData?.completedSubTasks} of ${taskModalData?.subTasks?.length}`})</CategoryTitle>
+				{taskModalData?.subTasks?.map((subTask) => {
 					return (
 						<SubTaskWrapper key={subTask.id}>
 							<Checkbox checkboxItem={{ value: subTask.id, label: subTask.title }} isChecked={subTask.completed} onChange={() => {}} />
@@ -32,7 +33,7 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
 			</CategoryWrapper>
 			<CategoryWrapper>
 				<CategoryTitle>Current Status</CategoryTitle>
-				<Dropdown onChange={() => {}} values={mapColumnsToDropdown()} defaultValue={taskData.column_id} />
+				<Dropdown onChange={() => {}} values={mapColumnsToDropdown()} defaultValue={taskModalData?.column_id} />
 			</CategoryWrapper>
 		</>
 	);

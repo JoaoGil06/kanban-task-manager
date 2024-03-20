@@ -19,11 +19,16 @@ import IconShowSidebar from '../../assets/icon-show-sidebar.svg';
 import { useSideBarContext } from './context/SideBarContext';
 import BoardLink from './components/BoardLink';
 import SwitchTheme from '../SwitchTheme';
-import { useGlobalContext } from '../../context/GlobalContext';
+import { useAppDispatch } from '../../store/store';
+import { openNewBoardModal } from '../../store/features/Modal/ModalSlice';
 
 export const SideBar = () => {
 	const { isShown, onClickToShowSidebar, boards } = useSideBarContext();
-	const { addNewBoardModal } = useGlobalContext();
+	const dispatch = useAppDispatch();
+
+	const onClickAddNewBoard = () => {
+		dispatch(openNewBoardModal());
+	};
 
 	return (
 		<>
@@ -40,7 +45,7 @@ export const SideBar = () => {
 
 					<BoardContainer isActive={false}>
 						<BoardIcon src={IconBoard} isActive={false} isAddNewBoard />
-						<BoardTitle isActive={false} isAddNewBoard onClick={addNewBoardModal.onClickAddNewBoard}>
+						<BoardTitle isActive={false} isAddNewBoard onClick={onClickAddNewBoard}>
 							+ Create new board
 						</BoardTitle>
 					</BoardContainer>
