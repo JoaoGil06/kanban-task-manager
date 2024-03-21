@@ -27,6 +27,7 @@ export const ActionsContainer = styled.div`
 	background-color: #fff;
 	border: 1px solid black;
 	min-width: 8rem;
+	z-index: 2;
 `;
 
 export const ActionItem = styled.div`

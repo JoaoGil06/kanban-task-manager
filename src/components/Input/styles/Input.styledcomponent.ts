@@ -25,7 +25,6 @@ export const InputComponent = styled.input<InputComponentProps>`
 	border-radius: 4px;
 	color: var(--richBlack);
 	line-height: 2.3rem;
-	font-weight: 700;
 	transition: all 0.2s;
 
 	&:focus {

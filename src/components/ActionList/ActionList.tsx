@@ -9,6 +9,11 @@ export const ActionList = ({ actions }: ActionListProps) => {
 		setIsActionsVisible(!isActionsVisible);
 	};
 
+	const handleOnClick = (onClick: () => void) => {
+		onClick();
+		setIsActionsVisible(false);
+	};
+
 	return (
 		<Container>
 			<CircleContainer onClick={handleToggleActionsVisibility}>
@@ -19,7 +24,7 @@ export const ActionList = ({ actions }: ActionListProps) => {
 			{isActionsVisible && (
 				<ActionsContainer>
 					{actions.map((action) => (
-						<ActionItem key={action.label} onClick={action.onClick}>
+						<ActionItem key={action.label} onClick={() => handleOnClick(action.onClick)}>
 							{action.label}
 						</ActionItem>
 					))}

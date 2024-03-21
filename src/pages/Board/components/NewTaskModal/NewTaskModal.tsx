@@ -22,7 +22,7 @@ export const NewTaskModal = ({ isOpen, onClose, columns }: NewTaskModalProps) =>
 	});
 
 	const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
-		event?.preventDefault();
+		event.preventDefault();
 
 		console.log('[Form Data]: ', formData);
 	};
@@ -53,7 +53,7 @@ export const NewTaskModal = ({ isOpen, onClose, columns }: NewTaskModalProps) =>
 		setFormData({ ...formData, subTasks: [...formData.subTasks, subTask] });
 	};
 
-	const handleDeleteColumn = (id: string) => {
+	const handleDeleteSubtask = (id: string) => {
 		const subTasksFiltered = formData.subTasks.filter((subTask) => subTask.id !== id);
 		setFormData({ ...formData, subTasks: subTasksFiltered });
 	};
@@ -78,7 +78,7 @@ export const NewTaskModal = ({ isOpen, onClose, columns }: NewTaskModalProps) =>
 							return (
 								<SubTask key={subTask.id}>
 									<Input name='subtasks' type='text' onChange={(event) => handleOnChange(event, subTask.id)} value={subTask.title} />
-									{formData.subTasks.length > 1 && <DeleteIcon src={IconCross} onClick={() => handleDeleteColumn(subTask.id)} />}
+									{formData.subTasks.length > 1 && <DeleteIcon src={IconCross} onClick={() => handleDeleteSubtask(subTask.id)} />}
 								</SubTask>
 							);
 						})}
