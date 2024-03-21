@@ -1,7 +1,12 @@
 import SubTask from '../../../../../types/SubTask.type';
 import Task from '../../../../../types/Task.type';
 
-export default interface TaskData extends Task {
+export interface TaskData extends Task {
 	subTasks: SubTask[];
 	completedSubTasks: number;
+}
+
+export default interface State {
+	isOpenTaskModal: boolean;
+	taskModalData: TaskData;
 }

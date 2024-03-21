@@ -1,7 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import State from './types/state.type';
-import BoardActions from './types/actions.type';
 import mapTasksAndColumns from '../../Mappers/MapTasksAndColumns';
+import Column from '../../../types/Column.type';
+import { setBoardAction, setBoardDataAction } from './types/actions.type';
+import { DropResult } from 'react-beautiful-dnd';
 
 const initialState: State = {
 	id: '',
@@ -15,22 +17,22 @@ const boardSlice = createSlice({
 	name: 'board',
 	initialState,
 	reducers: {
-		setBoard: (state: State, action: PayloadAction<BoardActions>) => {
+		setBoard: (state: State, action: PayloadAction<setBoardAction>) => {
 			const { id, title, isLoading } = action.payload;
 			state.id = id;
 			state.title = title;
 			state.isLoading = isLoading;
 		},
-		setColumns: (state, action) => {
+		setColumns: (state: State, action: PayloadAction<Column[]>) => {
 			state.columns = action.payload;
 		},
-		setBoardData: (state: State, action) => {
+		setBoardData: (state: State, action: PayloadAction<setBoardDataAction>) => {
 			const { columns, tasks } = action.payload;
 			const data = mapTasksAndColumns(columns, tasks);
 
 			state.data = data;
 		},
-		onDragTask: (state: State, action) => {
+		onDragTask: (state: State, action: PayloadAction<DropResult>) => {
 			const { source, destination } = action.payload;
 
 			if (!destination) return;

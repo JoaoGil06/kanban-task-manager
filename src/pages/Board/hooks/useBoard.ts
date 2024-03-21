@@ -8,7 +8,6 @@ import { DELETE_BOARD } from '../../../graphql/mutations/boards';
 import { GET_BOARD } from '../../../graphql/queries/boards';
 import { closeDeleteBoardModal } from '../../../store/features/Modals/DeleteBoardModal/DeleteBoardModalSlice';
 import { closeAddNewTaskModal } from '../../../store/features/Modals/NewTaskModal/NewTaskModalSlice';
-import { closeNewBoardModal } from '../../../store/features/Modals/NewBoardModal/NewBoardModalSlice';
 import { closeAddNewColumnModal, openAddNewColumnModal } from '../../../store/features/Modals/NewColumnModal/NewColumnModalSlice';
 import { closeTaskModal } from '../../../store/features/Modals/TaskModal/TaskModalSlice';
 import { DropResult } from 'react-beautiful-dnd';
@@ -18,7 +17,6 @@ const useBoard = () => {
 	const { title, data: boardData } = useAppSelector((state) => state.board);
 	const { isOpenDeleteBoardModal } = useAppSelector((state) => state.deleteModal);
 	const { isOpenAddNewTaskModal } = useAppSelector((state) => state.newTaskModal);
-	const { isOpenNewBoardModal } = useAppSelector((state) => state.newBoardModal);
 	const { isOpenAddNewColumnModal } = useAppSelector((state) => state.newColumnModal);
 	const { isOpenTaskModal } = useAppSelector((state) => state.taskModal);
 	const dispatch = useAppDispatch();
@@ -68,10 +66,6 @@ const useBoard = () => {
 		dispatch(closeAddNewTaskModal());
 	};
 
-	const onCloseAddNewBoardModal = () => {
-		dispatch(closeNewBoardModal());
-	};
-
 	const onOpenAddNewColumnModal = () => {
 		dispatch(openAddNewColumnModal());
 	};
@@ -102,10 +96,6 @@ const useBoard = () => {
 		newTaskModal: {
 			isOpenAddNewTaskModal,
 			onCloseNewTaskModal,
-		},
-		addNewBoardModal: {
-			isOpenNewBoardModal,
-			onCloseAddNewBoardModal,
 		},
 		addNewColumnModal: {
 			isOpenAddNewColumnModal,

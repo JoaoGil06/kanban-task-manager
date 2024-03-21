@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import Button from '../../../../components/Button';
-import { ButtonVariant } from '../../../../components/Button/types/ButtonVariant.enum';
-import Input from '../../../../components/Input';
-import Modal from '../../../../components/Modal';
 import { ColumnFormRow, ColumnsLabel, DeleteIcon, Form, ModalContainer, ModalTitle } from './styles/NewBoardModal.styledcomponent';
 import NewBoardModalProps from './types/NewBoardModalProps.type';
 import { v4 as uuidv4 } from 'uuid';
-import IconCross from '../../../../assets/icon-cross.svg';
+import IconCross from '../../assets/icon-cross.svg';
 import NewBoardModalForm from './types/NewBoardModalForm.type';
+import Modal from '../Modal';
+import Input from '../Input';
+import Button from '../Button';
+import { ButtonVariant } from '../Button/types/ButtonVariant.enum';
 
 export const NewBoardModal = ({ isOpen, onClose }: NewBoardModalProps) => {
 	const column = { id: uuidv4(), value: '' };
@@ -19,7 +19,8 @@ export const NewBoardModal = ({ isOpen, onClose }: NewBoardModalProps) => {
 
 	const handleSubmit = (e: React.FormEvent): void => {
 		e.preventDefault();
-		console.log('Criar o Hook de criação e usar aqui');
+
+		console.log('Fazer a mutation');
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id?: string): void => {
@@ -62,7 +63,7 @@ export const NewBoardModal = ({ isOpen, onClose }: NewBoardModalProps) => {
 					<div>
 						<ColumnsLabel>Columns</ColumnsLabel>
 						{formData.columns.map((column) => (
-							<ColumnFormRow>
+							<ColumnFormRow key={column.id}>
 								<Input onChange={(e) => handleChange(e, column.id)} name={`column-${column.id}`} value={column.value} type='text' placeholder='Insert column name' />
 								{formData.columns.length > 1 && <DeleteIcon src={IconCross} onClick={() => handleDeleteColumn(column.id)} />}
 							</ColumnFormRow>

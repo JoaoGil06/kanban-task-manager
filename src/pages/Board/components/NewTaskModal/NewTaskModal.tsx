@@ -76,8 +76,8 @@ export const NewTaskModal = ({ isOpen, onClose, columns }: NewTaskModalProps) =>
 						<Label>SubTasks</Label>
 						{formData.subTasks.map((subTask) => {
 							return (
-								<SubTask>
-									<Input key={subTask.id} name='subtasks' type='text' onChange={(event) => handleOnChange(event, subTask.id)} value={subTask.title} />
+								<SubTask key={subTask.id}>
+									<Input name='subtasks' type='text' onChange={(event) => handleOnChange(event, subTask.id)} value={subTask.title} />
 									{formData.subTasks.length > 1 && <DeleteIcon src={IconCross} onClick={() => handleDeleteColumn(subTask.id)} />}
 								</SubTask>
 							);

@@ -19,8 +19,6 @@ const NewColumnModal = ({ isOpen, onClose }: NewColumnModalProps) => {
 	const handleSubmit = (e: React.FormEvent): void => {
 		e.preventDefault();
 		setColumnName('');
-		console.log('Criar o Hook de criação e usar aqui');
-		console.log('nome da coluna: ', columnName);
 	};
 
 	return (

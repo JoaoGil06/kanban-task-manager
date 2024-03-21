@@ -1,11 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import TaskData from './types/TaskData.type';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import mapTaskAndSubTasks from '../../../Mappers/MapTaskAndSubTasks';
-
-interface State {
-	isOpenTaskModal: boolean;
-	taskModalData: TaskData;
-}
+import { setTaskModalDataAction } from './types/actions.type';
+import State, { TaskData } from './types/state.type';
 
 const initialState: State = {
 	isOpenTaskModal: false,
@@ -22,13 +18,9 @@ const taskModalSlice = createSlice({
 		closeTaskModal: (state: State) => {
 			state.isOpenTaskModal = false;
 		},
-		setTaskModalData: (state: State, action) => {
-			console.log('[Entrou aqui]');
+		setTaskModalData: (state: State, action: PayloadAction<setTaskModalDataAction>) => {
 			const { task, subtasks } = action.payload;
-			console.log('[Task]: ', task);
-			console.log('[SubTasks]: ', subtasks);
 			const data = mapTaskAndSubTasks(task, subtasks);
-			console.log('[setTaskModalData]: ', setTaskModalData);
 			state.taskModalData = data;
 		},
 	},

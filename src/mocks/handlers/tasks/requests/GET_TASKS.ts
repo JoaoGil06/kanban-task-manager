@@ -4,7 +4,6 @@ import Task from '../../../../types/Task.type';
 import Column from '../../../../types/Column.type';
 
 const GET_TASKS = graphql.query('Tasks', ({ variables }) => {
-	console.log(variables);
 	const { columns } = variables;
 	let res: Task[] = [];
 

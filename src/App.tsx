@@ -15,6 +15,7 @@ function App() {
 					<Route path='*' element={<NotFound />} />
 				</Route>
 			</Routes>
+
 			<GlobalStyle />
 		</BrowserRouter>
 	);

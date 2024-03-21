@@ -1,11 +1,13 @@
+import Column from '../../../../types/Column.type';
+import Task from '../../../../types/Task.type';
+
 export interface setBoardAction {
 	id: string;
 	title: string;
 	isLoading: boolean;
 }
 
-// Quando tiver mais actions será:
-// setBoardAction | xxxAction | yyyAction
-type BoardActions = setBoardAction;
-
-export default BoardActions;
+export interface setBoardDataAction {
+	columns: Column[];
+	tasks: Task[];
+}
