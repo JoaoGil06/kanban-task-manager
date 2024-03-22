@@ -35,8 +35,8 @@ export const Board = () => {
 					</ColumnsContainer>
 				</DragDropContext>
 
-				<NewColumnModal isOpen={addNewColumnModal.isOpenAddNewColumnModal} onClose={addNewColumnModal.onCloseAddNewColumnModal} />
-				<NewTaskModal isOpen={newTaskModal.isOpenAddNewTaskModal} onClose={newTaskModal.onCloseNewTaskModal} columns={board.boardData} />
+				<NewColumnModal isOpen={addNewColumnModal.isOpenAddNewColumnModal} onClick={board.refetchColumns} onClose={addNewColumnModal.onCloseAddNewColumnModal} />
+				<NewTaskModal isOpen={newTaskModal.isOpenAddNewTaskModal} onClose={newTaskModal.onCloseNewTaskModal} columns={board.boardData} onClick={board.refetchTasks} />
 				<DeleteBoardModal isOpen={deleteBoardModal.isOpenDeleteBoardModal} onClose={deleteBoardModal.onCloseDeleteBoardModal} boardTitle={board.title} onClick={onDeleteBoard} />
 				<TaskModal isOpen={taskModal.isOpenTaskModal} onClose={taskModal.onCloseTaskModal} />
 			</BoardContainer>

@@ -1,6 +1,6 @@
 import Column from '../../../types/Column.type';
 
-const boards: Column[] = [
+const columns: Column[] = [
 	{ id: '4e9aae2b-09d8-44eb-95ff-a35f924d7ffa', board_id: 'dc542789-9cc0-4655-810c-97677cf182a8', title: 'To Do' },
 	{ id: '53252eac-c693-47cd-8040-447bc4438491', board_id: 'dc542789-9cc0-4655-810c-97677cf182a8', title: 'In Progress' },
 	{ id: '4cffbab3-1eda-4bcb-9a73-f843dcaedae9', board_id: 'dc542789-9cc0-4655-810c-97677cf182a8', title: 'Review' },
@@ -22,4 +22,4 @@ const boards: Column[] = [
 	{ id: 'c54cc236-b0e9-47da-9680-5cfa4e63c35c', board_id: '74dbd973-cb74-4a52-aaac-489135055c75', title: 'Done' },
 ];
 
-export default boards;
+export default columns;

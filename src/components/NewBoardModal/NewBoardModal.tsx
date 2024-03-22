@@ -1,56 +1,14 @@
-import { useState } from 'react';
 import { ColumnFormRow, ColumnsLabel, DeleteIcon, Form, ModalContainer, ModalTitle } from './styles/NewBoardModal.styledcomponent';
 import NewBoardModalProps from './types/NewBoardModalProps.type';
-import { v4 as uuidv4 } from 'uuid';
 import IconCross from '../../assets/icon-cross.svg';
-import NewBoardModalForm from './types/NewBoardModalForm.type';
 import Modal from '../Modal';
 import Input from '../Input';
 import Button from '../Button';
 import { ButtonVariant } from '../Button/types/ButtonVariant.enum';
+import useNewBoardModal from './hooks/useNewBoardModal';
 
-export const NewBoardModal = ({ isOpen, onClose }: NewBoardModalProps) => {
-	const column = { id: uuidv4(), value: '' };
-
-	const [formData, setFormData] = useState<NewBoardModalForm>({
-		name: '',
-		columns: [column],
-	});
-
-	const handleSubmit = (e: React.FormEvent): void => {
-		e.preventDefault();
-
-		console.log('Fazer a mutation');
-	};
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id?: string): void => {
-		e.preventDefault();
-		const { name, value } = e.target;
-
-		// Se um ID for fornecido, é uma alteração de coluna
-		if (id) {
-			const newColumns = formData.columns.map((column) => (column.id === id ? { ...column, value } : column));
-			setFormData({ ...formData, columns: newColumns });
-		} else {
-			// Caso contrário, é uma alteração no nome
-			setFormData({ ...formData, [name]: value });
-		}
-	};
-
-	const handleAddNewColumn = (): void => {
-		setFormData({ ...formData, columns: [...formData.columns, column] });
-	};
-
-	const handleDeleteColumn = (id: string) => {
-		const filteredColumns = formData.columns.filter((column) => column.id !== id);
-
-		setFormData({ ...formData, columns: filteredColumns });
-	};
-
-	const handleOnClose = (): void => {
-		setFormData({ name: '', columns: [column] });
-		onClose();
-	};
+export const NewBoardModal = ({ isOpen, onClose, onClick }: NewBoardModalProps) => {
+	const { formData, handleAddNewColumn, handleChange, handleDeleteColumn, handleOnClose, handleSubmit } = useNewBoardModal({ onClick, onClose });
 
 	return (
 		<Modal isOpen={isOpen} onClose={handleOnClose}>
@@ -70,7 +28,7 @@ export const NewBoardModal = ({ isOpen, onClose }: NewBoardModalProps) => {
 						))}
 					</div>
 					<Button variant={ButtonVariant.Secondary} label='+Add new column' onClick={handleAddNewColumn} />
-					<Button variant={ButtonVariant.Primary} label='Create New Board' />
+					<Button variant={ButtonVariant.Primary} label='Create New Board' type='submit' />
 				</Form>
 			</ModalContainer>
 		</Modal>

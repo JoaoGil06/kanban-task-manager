@@ -28,30 +28,28 @@ const useBoard = () => {
 		},
 	});
 
-	const { loading: isLoadingColumnsData, data: columnsData } = useQuery(GET_COLUMNS_BY_BOARD_ID, {
+	const {
+		loading: isLoadingColumnsData,
+		data: columnsData,
+		refetch: refetchColumns,
+	} = useQuery(GET_COLUMNS_BY_BOARD_ID, {
 		variables: { board_id: id },
 		onCompleted: (data) => {
 			getTasks({ variables: { columns: data } });
 			dispatch(setColumns(data));
 		},
+		notifyOnNetworkStatusChange: true,
 	});
 
-	const [getTasks, { loading: isLoadingTasksData }] = useLazyQuery(GET_TASKS, {
+	const [getTasks, { loading: isLoadingTasksData, refetch: refetchTasks }] = useLazyQuery(GET_TASKS, {
 		onCompleted: (data) => {
+			console.log('entra aqui');
 			dispatch(setBoardData({ columns: columnsData, tasks: data }));
 		},
+		notifyOnNetworkStatusChange: true,
 	});
 
-	const [deleteBoard, { loading, error }] = useMutation(DELETE_BOARD, {
-		onCompleted: () => {
-			// Handle completion, e.g., showing a success message or redirecting
-			console.log('Board deleted successfully');
-		},
-		onError: (error) => {
-			// Handle error
-			console.error('Error deleting board:', error.message);
-		},
-	});
+	const [deleteBoard] = useMutation(DELETE_BOARD);
 
 	const onDeleteBoard = () => {
 		console.log('carregou no delete board');
@@ -87,6 +85,8 @@ const useBoard = () => {
 		board: {
 			title,
 			boardData,
+			refetchColumns,
+			refetchTasks,
 		},
 		onDeleteBoard,
 		deleteBoardModal: {

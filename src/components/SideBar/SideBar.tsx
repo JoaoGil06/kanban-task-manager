@@ -21,13 +21,10 @@ import SwitchTheme from '../SwitchTheme';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { openNewBoardModal } from '../../store/features/Modals/NewBoardModal/NewBoardModalSlice';
 import { closeSidebar, openSidebar } from '../../store/features/Sidebar/SidebarSlice';
-import { useQuery } from '@apollo/client';
-import { GET_BOARDS } from '../../graphql/queries/boards';
 import Board from '../../types/Board.type';
+import SidebarProps from './types/SidebarProps.type';
 
-export const SideBar = () => {
-	const { data: boards, loading } = useQuery(GET_BOARDS);
-
+export const SideBar = ({ boards, loading }: SidebarProps) => {
 	const { isOpenSidebar } = useAppSelector((state) => state.sidebar);
 	const dispatch = useAppDispatch();
 
@@ -56,7 +53,7 @@ export const SideBar = () => {
 			<SideBarContainer isShown={isOpenSidebar}>
 				<SideBarContent isShown={isOpenSidebar}>
 					<SideBarTitle>All Boards ({boards.length})</SideBarTitle>
-					{boards?.map((board: Board) => {
+					{boards.map((board: Board) => {
 						return <BoardLink to={`/board/${board.id}`} key={board.id} title={board.title} />;
 					})}
 
