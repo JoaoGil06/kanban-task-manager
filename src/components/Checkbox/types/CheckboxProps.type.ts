@@ -1,6 +1,6 @@
 import { CheckboxItem } from './CheckboxItem.type';
 
-type onChangeValue = {
+export type onChangeCheckboxValue = {
 	value: string;
 	isChecked: boolean;
 };
@@ -8,5 +8,5 @@ type onChangeValue = {
 export default interface CheckboxProps {
 	checkboxItem: CheckboxItem;
 	isChecked: boolean;
-	onChange: ({ value, isChecked }: onChangeValue) => void;
+	onChange: ({ value, isChecked }: onChangeCheckboxValue) => void;
 }

@@ -22,7 +22,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
   html {
   /* font-size: 10px; */
@@ -70,7 +70,6 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: var(--white);
   height:100%;
-
 }
 
 h1,

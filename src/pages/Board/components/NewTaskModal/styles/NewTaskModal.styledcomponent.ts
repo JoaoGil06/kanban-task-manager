@@ -16,7 +16,7 @@ export const Form = styled.form`
 	gap: 2.4rem;
 `;
 
-export const SubTasksContainer = styled.div`
+export const SubtasksContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1.2rem;
@@ -27,7 +27,7 @@ export const Label = styled.label`
 	color: var(--shadowBlue);
 `;
 
-export const SubTask = styled.div`
+export const Subtask = styled.div`
 	display: flex;
 	align-items: center;
 `;

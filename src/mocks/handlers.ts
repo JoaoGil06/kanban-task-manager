@@ -6,6 +6,7 @@ import { GET_SUBTASKS } from './handlers/subtasks';
 import CREATE_TASK from './handlers/tasks/requests/CREATE_TASK';
 import CREATE_SUBTASK from './handlers/subtasks/requests/CREATE_SUBTASK';
 import CREATE_BOARD from './handlers/boards/requests/CREATE_BOARD';
+import UPDATE_TASK from './handlers/tasks/requests/UPDATE_TASK';
 
 export const handlers = [
 	GET_BOARDS,
@@ -17,6 +18,7 @@ export const handlers = [
 	CREATE_COLUMN,
 	GET_TASKS,
 	CREATE_TASK,
+	UPDATE_TASK,
 	GET_SUBTASKS,
 	CREATE_SUBTASK,
 	graphql.mutation('CreatePost', ({ query, variables }) => {

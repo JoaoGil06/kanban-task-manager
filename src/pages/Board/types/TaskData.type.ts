@@ -1,7 +1,7 @@
-import SubTask from '../../../types/SubTask.type';
+import Subtask from '../../../types/Subtask.type';
 import Task from '../../../types/Task.type';
 
 export default interface TaskData extends Task {
-	subTasks: SubTask[];
+	subtasks: Subtask[];
 	completedSubTasks: number;
 }

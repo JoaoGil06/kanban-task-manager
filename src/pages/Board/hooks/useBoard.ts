@@ -11,6 +11,7 @@ import { closeAddNewTaskModal } from '../../../store/features/Modals/NewTaskModa
 import { closeAddNewColumnModal, openAddNewColumnModal } from '../../../store/features/Modals/NewColumnModal/NewColumnModalSlice';
 import { closeTaskModal } from '../../../store/features/Modals/TaskModal/TaskModalSlice';
 import { DropResult } from 'react-beautiful-dnd';
+import { UPDATE_TASK } from '../../../graphql/mutations/tasks';
 
 const useBoard = () => {
 	const { id } = useParams();
@@ -50,6 +51,7 @@ const useBoard = () => {
 	});
 
 	const [deleteBoard] = useMutation(DELETE_BOARD);
+	const [updateTask] = useMutation(UPDATE_TASK);
 
 	const onDeleteBoard = () => {
 		console.log('carregou no delete board');
@@ -77,7 +79,15 @@ const useBoard = () => {
 	};
 
 	const onDragEnd = (event: DropResult) => {
-		dispatch(onDragTask(event));
+		console.log('[Event]: ', event);
+		if (event.destination) {
+			const destinationColumnId = event.destination.droppableId.split('_')[2];
+			console.log('[Destination Column Id]: ', destinationColumnId);
+
+			// Descobrir como saber qual os dados da task selecionada
+			// Pode ser necessário passar a lógica da alteração de colunas para aqui
+		}
+		dispatch(onDragTask({ event, updateTask }));
 	};
 
 	return {

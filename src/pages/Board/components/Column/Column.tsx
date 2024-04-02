@@ -13,16 +13,16 @@ export const Column = ({ title, tasks, color }: ColumnProps) => {
 	const dispatch = useAppDispatch();
 	const [currentTask, setCurrentTask] = useState<Task | null>(null);
 
-	const [getSubTasks] = useLazyQuery(GET_SUBTASKS, {
+	const [getSubtasks] = useLazyQuery(GET_SUBTASKS, {
 		onCompleted: (data) => {
 			dispatch(openTaskModal());
-			dispatch(setTaskModalData({ task: currentTask, subtasks: data }));
+			dispatch(setTaskModalData({ task: currentTask as Task, subtasks: data }));
 		},
 	});
 
 	const onOpenTaskModal = async (task: Task) => {
 		setCurrentTask(task);
-		await getSubTasks({ variables: { task_id: task.id } });
+		await getSubtasks({ variables: { task_id: task.id } });
 	};
 
 	return (
@@ -32,7 +32,7 @@ export const Column = ({ title, tasks, color }: ColumnProps) => {
 				<Draggable draggableId={task.id} key={task.id} index={index}>
 					{(provided) => (
 						<div {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-							<Card task={task} onClick={() => onOpenTaskModal(task)} />
+							<Card task={task} onClick={() => onOpenTaskModal(task)} totalSubtasks={task.subtasks.length} completedSubtasks={task.completedSubtasks} />
 						</div>
 					)}
 				</Draggable>

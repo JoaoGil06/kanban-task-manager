@@ -23,7 +23,7 @@ export const Board = () => {
 				<DragDropContext onDragEnd={onDragEnd}>
 					<ColumnsContainer>
 						{board.boardData.map((column, index) => (
-							<Droppable droppableId={`ROOT-${index}`} type='group' key={column.id}>
+							<Droppable droppableId={`ROOT_${index}_${column.id}`} type='group' key={column.id}>
 								{(provided) => (
 									<div {...provided.droppableProps} ref={provided.innerRef}>
 										<Column key={column.id} title={column.title} tasks={column.tasks} color={colorsArray[index] ?? '#EA5555'} />
@@ -38,7 +38,7 @@ export const Board = () => {
 				<NewColumnModal isOpen={addNewColumnModal.isOpenAddNewColumnModal} onClick={board.refetchColumns} onClose={addNewColumnModal.onCloseAddNewColumnModal} />
 				<NewTaskModal isOpen={newTaskModal.isOpenAddNewTaskModal} onClose={newTaskModal.onCloseNewTaskModal} columns={board.boardData} onClick={board.refetchTasks} />
 				<DeleteBoardModal isOpen={deleteBoardModal.isOpenDeleteBoardModal} onClose={deleteBoardModal.onCloseDeleteBoardModal} boardTitle={board.title} onClick={onDeleteBoard} />
-				<TaskModal isOpen={taskModal.isOpenTaskModal} onClose={taskModal.onCloseTaskModal} />
+				<TaskModal isOpen={taskModal.isOpenTaskModal} onClose={taskModal.onCloseTaskModal} refetchColumns={board.refetchColumns} />
 			</BoardContainer>
 		</>
 	);

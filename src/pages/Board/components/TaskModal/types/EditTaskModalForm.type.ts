@@ -1,6 +1,6 @@
 import { DropdownItem } from '../../../../../components/Dropdown/types/DropdownItem.type';
 
-interface SubTask {
+interface Subtask {
 	id: string;
 	title: string;
 }
@@ -8,6 +8,6 @@ interface SubTask {
 export default interface EditTaskModalForm {
 	title: string;
 	description: string;
-	subTasks: SubTask[];
+	subtasks: Subtask[];
 	status: DropdownItem;
 }

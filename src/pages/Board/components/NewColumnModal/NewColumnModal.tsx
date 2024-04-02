@@ -15,7 +15,7 @@ const NewColumnModal = ({ isOpen, onClose, onClick }: NewColumnModalProps) => {
 				<ModalTitle>Add New Column</ModalTitle>
 				<Form onSubmit={handleSubmit}>
 					<Input onChange={handleOnChange} name='Name' value={columnName} type='text' placeholder='Insere column name' />
-					<Button variant={ButtonVariant.Primary} label='Add Column' />
+					<Button variant={ButtonVariant.Primary} label='Add Column' type='submit' />
 				</Form>
 			</ModalContainer>
 		</Modal>

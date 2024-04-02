@@ -5,6 +5,11 @@ import Column from '../../../types/Column.type';
 import { setBoardAction, setBoardDataAction } from './types/actions.type';
 import { DropResult } from 'react-beautiful-dnd';
 
+interface onDragTaskAction {
+	event: DropResult;
+	updateTask: () => unknown;
+}
+
 const initialState: State = {
 	id: '',
 	title: '',
@@ -32,16 +37,18 @@ const boardSlice = createSlice({
 
 			state.data = data;
 		},
-		onDragTask: (state: State, action: PayloadAction<DropResult>) => {
-			const { source, destination } = action.payload;
+		onDragTask: (state: State, action: PayloadAction<onDragTaskAction>) => {
+			const {
+				event: { source, destination },
+			} = action.payload;
 
 			if (!destination) return;
 
 			if (source.droppableId === destination.droppableId && source.index === destination.index) return;
 
-			const sourceColumnIndex = +source.droppableId.split('-')[1];
+			const sourceColumnIndex = +source.droppableId.split('_')[1];
 			const sourceItemIndex = source.index;
-			const destinationColumnIndex = +destination.droppableId.split('-')[1];
+			const destinationColumnIndex = +destination.droppableId.split('_')[1];
 			const destinationItemIndex = destination.index;
 
 			const newBoardData = [...state.data];

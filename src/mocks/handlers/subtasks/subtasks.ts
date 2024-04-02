@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import SubTask from '../../../types/SubTask.type';
+import Subtask from '../../../types/Subtask.type';
 
-const subtasks: SubTask[] = [
+const subtasks: Subtask[] = [
 	{ id: faker.string.uuid(), title: faker.lorem.words(), completed: true, creation_date: faker.date.anytime(), task_id: '4f796626-377d-4bc9-b319-f340c1eefcbb' },
 	{ id: faker.string.uuid(), title: faker.lorem.words(), completed: false, creation_date: faker.date.anytime(), task_id: '4f796626-377d-4bc9-b319-f340c1eefcbb' },
 	{ id: faker.string.uuid(), title: faker.lorem.words(), completed: false, creation_date: faker.date.anytime(), task_id: '4f796626-377d-4bc9-b319-f340c1eefcbb' },

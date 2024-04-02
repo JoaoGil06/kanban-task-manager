@@ -8,9 +8,9 @@ import {
 	Label,
 	ModalContainer,
 	StatusContainer,
-	SubTask,
-	SubTaskWrapper,
-	SubTasksContainer,
+	Subtask,
+	SubtaskWrapper,
+	SubtasksContainer,
 	TaskDescription,
 	TaskTitle,
 	TaskTitleWrapper,
@@ -24,8 +24,8 @@ import { ButtonVariant } from '../../../../components/Button/types/ButtonVariant
 import Button from '../../../../components/Button';
 import IconCross from '../../../../assets/icon-cross.svg';
 
-export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
-	const { isEditing, handleOnClose, actions, taskData, columns, form } = useTaskModal({ onClose });
+export const TaskModal = ({ isOpen, onClose, refetchColumns }: TaskModalProps) => {
+	const { isEditing, handleOnClose, actions, taskData, columns, form } = useTaskModal({ onClose, refetchColumns });
 
 	const mapColumnsToDropdown = () => columns.map((column) => ({ label: column.title, value: column.id }));
 
@@ -37,18 +37,18 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
 			</TaskTitleWrapper>
 			<TaskDescription>{taskData?.description}</TaskDescription>
 			<CategoryWrapper>
-				<CategoryTitle>SubTasks ({`${taskData?.completedSubTasks} of ${taskData?.subTasks?.length}`})</CategoryTitle>
-				{taskData?.subTasks?.map((subTask) => {
+				<CategoryTitle>Subtasks ({`${taskData?.completedSubtasks} of ${taskData?.subtasks?.length}`})</CategoryTitle>
+				{taskData?.subtasks?.map((subtask) => {
 					return (
-						<SubTaskWrapper key={subTask.id}>
-							<Checkbox checkboxItem={{ value: subTask.id, label: subTask.title }} isChecked={subTask.completed} onChange={() => {}} />
-						</SubTaskWrapper>
+						<SubtaskWrapper key={subtask.id}>
+							<Checkbox checkboxItem={{ value: subtask.id, label: subtask.title }} isChecked={subtask.completed} onChange={form.onChangeSubtask} />
+						</SubtaskWrapper>
 					);
 				})}
 			</CategoryWrapper>
 			<CategoryWrapper>
 				<CategoryTitle>Current Status</CategoryTitle>
-				<Dropdown onChange={() => {}} values={mapColumnsToDropdown()} defaultValue={taskData?.column_id} />
+				<Dropdown onChange={form.onChangeColumn} values={mapColumnsToDropdown()} defaultValue={taskData?.column_id} />
 			</CategoryWrapper>
 		</>
 	);
@@ -63,18 +63,18 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
 				<Form onSubmit={form.onSubmit}>
 					<Input name='title' type='text' onChange={form.onChange} value={form.editTask.title} showLabel />
 					<Input name='description' type='text' onChange={form.onChange} value={form.editTask.description} showLabel />
-					<SubTasksContainer>
-						<Label>SubTasks</Label>
-						{form.editTask.subTasks.map((subTask) => {
+					<SubtasksContainer>
+						<Label>Subtasks</Label>
+						{form.editTask.subtasks.map((subtask) => {
 							return (
-								<SubTask key={subTask.id}>
-									<Input name='subtasks' type='text' onChange={(event) => form.onChange(event, subTask.id)} value={subTask.title} />
-									{form.editTask.subTasks.length > 1 && <DeleteIcon src={IconCross} onClick={() => form.onClickToDeleteSubTask(subTask.id)} />}
-								</SubTask>
+								<Subtask key={subtask.id}>
+									<Input name='subtasks' type='text' onChange={(event) => form.onChange(event, subtask.id)} value={subtask.title} />
+									{form.editTask.subtasks.length > 1 && <DeleteIcon src={IconCross} onClick={() => form.onClickToDeleteSubtask(subtask.id)} />}
+								</Subtask>
 							);
 						})}
-						<Button variant={ButtonVariant.Secondary} label='+ Add New Task' onClick={form.onClickToAddSubTask} />
-					</SubTasksContainer>
+						<Button variant={ButtonVariant.Secondary} label='+ Add New Task' onClick={form.onClickToAddSubtask} />
+					</SubtasksContainer>
 					<StatusContainer>
 						<Label>Status</Label>
 						<Dropdown values={mapColumnsToDropdown()} onChange={form.onChangeDropdown} defaultValue={form.editTask.status.value} />

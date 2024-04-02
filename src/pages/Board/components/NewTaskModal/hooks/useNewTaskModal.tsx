@@ -14,12 +14,12 @@ interface UseNewTaskModalProps {
 }
 
 const useNewTaskModal = ({ onClick, onClose, columns }: UseNewTaskModalProps) => {
-	const subTask = { id: uuidv4(), title: '' };
+	const subtask = { id: uuidv4(), title: '' };
 
 	const [formData, setFormData] = useState<NewTaskModalForm>({
 		title: '',
 		description: '',
-		subTasks: [subTask],
+		subtasks: [subtask],
 		status: { value: '', label: '' },
 	});
 
@@ -32,10 +32,10 @@ const useNewTaskModal = ({ onClick, onClose, columns }: UseNewTaskModalProps) =>
 			column_id: formData.status.value,
 		},
 		onCompleted: (data) => {
-			formData.subTasks.map((subTask) => {
+			formData.subtasks.map((subtask) => {
 				createSubtask({
 					variables: {
-						title: subTask.title,
+						title: subtask.title,
 						task_id: data.id,
 					},
 				});
@@ -55,15 +55,15 @@ const useNewTaskModal = ({ onClick, onClose, columns }: UseNewTaskModalProps) =>
 		const { value, name } = event.target;
 
 		if (id) {
-			const subTasks = formData.subTasks.map((subTask) => {
-				if (subTask.id === id) {
-					return { ...subTask, title: value };
+			const subtasks = formData.subtasks.map((subtask) => {
+				if (subtask.id === id) {
+					return { ...subtask, title: value };
 				}
 
-				return subTask;
+				return subtask;
 			});
 
-			setFormData({ ...formData, subTasks });
+			setFormData({ ...formData, subtasks });
 		} else {
 			setFormData({ ...formData, [name]: value });
 		}
@@ -73,13 +73,13 @@ const useNewTaskModal = ({ onClick, onClose, columns }: UseNewTaskModalProps) =>
 		setFormData({ ...formData, status: item });
 	};
 
-	const handleOnClickToAddSubTask = () => {
-		setFormData({ ...formData, subTasks: [...formData.subTasks, subTask] });
+	const handleOnClickToAddSubtask = () => {
+		setFormData({ ...formData, subtasks: [...formData.subtasks, subtask] });
 	};
 
 	const handleDeleteSubtask = (id: string) => {
-		const subTasksFiltered = formData.subTasks.filter((subTask) => subTask.id !== id);
-		setFormData({ ...formData, subTasks: subTasksFiltered });
+		const subtasksFiltered = formData.subtasks.filter((subtask) => subtask.id !== id);
+		setFormData({ ...formData, subtasks: subtasksFiltered });
 	};
 
 	const mapColumnsToDropdownValues = () => {
@@ -93,7 +93,7 @@ const useNewTaskModal = ({ onClick, onClose, columns }: UseNewTaskModalProps) =>
 		handleOnSubmit,
 		handleOnChange,
 		handleChangeDropdown,
-		handleOnClickToAddSubTask,
+		handleOnClickToAddSubtask,
 		handleDeleteSubtask,
 		mapColumnsToDropdownValues,
 		formData,

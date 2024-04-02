@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ColumnContainer = styled.div`
-	width: 28rem;
+	min-width: 28rem;
 	min-height: 85vh;
 	border-radius: 0.6rem;
 	background: linear-gradient(180deg, #e9effa 0%, rgba(233, 239, 250, 0.5) 100%);

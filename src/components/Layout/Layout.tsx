@@ -22,7 +22,7 @@ export const Layout = () => {
 		<>
 			<PageHeader />
 			<SideBar boards={boards} loading={loading} />
-			<main style={{ marginLeft: isOpenSidebar ? '30rem' : '0px', transition: 'all .3s' }}>
+			<main style={{ marginLeft: isOpenSidebar ? '30rem' : '0px', transition: 'all .3s', overflow: 'hidden' }}>
 				<Outlet />
 				<NewBoardModal isOpen={isOpenNewBoardModal} onClose={onCloseAddNewBoardModal} onClick={refetchBoards} />
 			</main>

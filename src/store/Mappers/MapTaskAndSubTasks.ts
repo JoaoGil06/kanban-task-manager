@@ -1,8 +1,8 @@
-import SubTask from '../../types/SubTask.type';
+import Subtask from '../../types/Subtask.type';
 import Task from '../../types/Task.type';
 
-const mapTaskAndSubTasks = (task: Task, subTasks: SubTask[]) => {
-	const completedSubTasks = subTasks.reduce((accumulator, currentValue) => {
+const mapTaskAndSubtasks = (task: Task, subtasks: Subtask[]) => {
+	const completedSubtasks = subtasks.reduce((accumulator, currentValue) => {
 		if (currentValue.completed) {
 			accumulator += 1;
 		}
@@ -15,9 +15,9 @@ const mapTaskAndSubTasks = (task: Task, subTasks: SubTask[]) => {
 		description: task.description,
 		creation_date: task.creation_date,
 		column_id: task.column_id,
-		subTasks: subTasks,
-		completedSubTasks,
+		subtasks: subtasks,
+		completedSubtasks,
 	};
 };
 
-export default mapTaskAndSubTasks;
+export default mapTaskAndSubtasks;

@@ -1,4 +1,4 @@
-export default interface SubTask {
+export default interface Subtask {
 	id: string;
 	title: string;
 	task_id: string;
